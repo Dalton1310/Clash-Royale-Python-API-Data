@@ -79,19 +79,21 @@ ax1.set_title('Card Elixir Costs', fontsize=16)
 ax1.set_xlabel('Card Name', fontsize=12)
 ax1.set_ylabel('Elixir Cost', fontsize=12)
 
-# Create bar charts
+# Create bar chart for Number of Cards by Rarity
 fig, ax2 = plt.subplots(figsize=(10, 6))
 ax2.bar(rarities, card_counts, color='red')
 ax2.set_title('Number of Cards by Rarity', fontsize=16)
 ax2.set_xlabel('Rarity', fontsize=12)
 ax2.set_ylabel('Number of Cards', fontsize=12)
 
+# Create bar chart for Total Evolutions by Rarity
 fig, ax3 = plt.subplots(figsize=(10, 6))
 ax3.bar(rarities, evolution_totals, color='orange')
 ax3.set_title('Total Evolutions by Rarity', fontsize=16)
 ax3.set_xlabel('Rarity', fontsize=12)
 ax3.set_ylabel('Total Evolution Levels', fontsize=12)
 
+# Create bar chart for Cards by Maxed Level
 fig, ax4 = plt.subplots(figsize=(10, 6))
 ax4.bar(card_names, maxed_level, color='purple')
 # Rotate the card names on the x-axis for readability
