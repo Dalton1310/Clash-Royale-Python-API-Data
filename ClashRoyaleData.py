@@ -1,40 +1,13 @@
-import urllib.request
-import json
+import APILaunch as api
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-with open("mykey.txt") as f:
-    my_key = f.read().strip()
-
-base_url = "https://api.clashroyale.com/v1"
+# Specify the endpoint
 endpoint = "/cards"
 
-
-# Prepare the request with the Authorization header (fixing the dictionary issue)
-headers = {
-    "Authorization": f"Bearer {my_key}"
-}
-
-# Construct the request with the proper headers
-request = urllib.request.Request(
-    base_url + endpoint, headers=headers
-)
-
-# Send the request and get the response
-response = urllib.request.urlopen(request).read().decode("utf-8")
-#print(response)
-
-data = json.loads(response)
-
-# Write the data to a JSON file using UTF-8 encoding
-with open("ClashRoyaleView.json", "w", encoding="utf-8") as json_file:
-    json.dump(data, json_file, ensure_ascii=False, indent=4)
-
-
-# Load the data from the JSON file
-with open("ClashRoyaleView.json", "r", encoding="utf-8") as json_file:
-    cards_data = json.load(json_file)
+# Fetch data using the function from APILaunch
+api.endpoint_data = api.fetch_endpoint_data(endpoint)
 
 # Extract card names and elixir costs
 card_names = []
@@ -45,7 +18,7 @@ maxed_level = []
 rarity_card_counts = {}
 rarity_evolution_totals = {}
 
-for card in cards_data['items']:
+for card in api.endpoint_data['items']:
     card_names.append(card['name'])
     elixir_costs.append(card.get('elixirCost', 0))  # Some cards may not have elixir cost, use 0 as default
     rarity = card.get('rarity', 'Unknown')
@@ -53,7 +26,7 @@ for card in cards_data['items']:
     maxed_level.append(card.get('maxLevel', 0))
     # Update card count for this rarity
     rarity_card_counts[rarity] = rarity_card_counts.get(rarity, 0) + 1
-    
+
     # Update evolution total for this rarity
     rarity_evolution_totals[rarity] = rarity_evolution_totals.get(rarity, 0) + evolution_level
 
@@ -66,7 +39,7 @@ evolution_totals = [rarity_evolution_totals[r] for r in rarities]
 cards_sorted = sorted(zip(elixir_costs, card_names))
 
 # Unpack the sorted data
-elixir_costs_sorted, card_names_sorted= zip(*cards_sorted)
+elixir_costs_sorted, card_names_sorted = zip(*cards_sorted)
 
 # Create a vertical bar chart using matplotlib
 fig, ax1 = plt.subplots(figsize=(10, 6))
