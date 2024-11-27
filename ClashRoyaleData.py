@@ -41,40 +41,37 @@ cards_sorted = sorted(zip(elixir_costs, card_names))
 # Unpack the sorted data
 elixir_costs_sorted, card_names_sorted = zip(*cards_sorted)
 
-# Create a vertical bar chart using matplotlib
-fig, ax1 = plt.subplots(figsize=(10, 6))
-ax1.bar(card_names_sorted, elixir_costs_sorted, color='lightskyblue')
-# Rotate the card names on the x-axis for readability
-ax1.set_xticklabels(card_names_sorted, rotation=90, fontsize=10)
+# Create a single figure with multiple subplots
+fig, axs = plt.subplots(2, 2, figsize=(15, 10))  # 2 rows, 2 columns
 
-# Set chart title and labels
-ax1.set_title('Card Elixir Costs', fontsize=16)
-ax1.set_xlabel('Card Name', fontsize=12)
-ax1.set_ylabel('Elixir Cost', fontsize=12)
+# Plot 1: Card Elixir Costs
+axs[0, 0].bar(card_names_sorted, elixir_costs_sorted, color='lightskyblue')
+axs[0, 0].set_xticklabels(card_names_sorted, rotation=90, fontsize=8)
+axs[0, 0].set_title('Card Elixir Costs', fontsize=14)
+axs[0, 0].set_xlabel('Card Name', fontsize=10)
+axs[0, 0].set_ylabel('Elixir Cost', fontsize=10)
 
-# Create bar chart for Number of Cards by Rarity
-fig, ax2 = plt.subplots(figsize=(10, 6))
-ax2.bar(rarities, card_counts, color='red')
-ax2.set_title('Number of Cards by Rarity', fontsize=16)
-ax2.set_xlabel('Rarity', fontsize=12)
-ax2.set_ylabel('Number of Cards', fontsize=12)
+# Plot 2: Number of Cards by Rarity
+axs[0, 1].bar(rarities, card_counts, color='red')
+axs[0, 1].set_title('Number of Cards by Rarity', fontsize=14)
+axs[0, 1].set_xlabel('Rarity', fontsize=10)
+axs[0, 1].set_ylabel('Number of Cards', fontsize=10)
 
-# Create bar chart for Total Evolutions by Rarity
-fig, ax3 = plt.subplots(figsize=(10, 6))
-ax3.bar(rarities, evolution_totals, color='orange')
-ax3.set_title('Total Evolutions by Rarity', fontsize=16)
-ax3.set_xlabel('Rarity', fontsize=12)
-ax3.set_ylabel('Total Evolution Levels', fontsize=12)
+# Plot 3: Total Evolutions by Rarity
+axs[1, 0].bar(rarities, evolution_totals, color='orange')
+axs[1, 0].set_title('Total Evolutions by Rarity', fontsize=14)
+axs[1, 0].set_xlabel('Rarity', fontsize=10)
+axs[1, 0].set_ylabel('Total Evolution Levels', fontsize=10)
 
-# Create bar chart for Cards by Maxed Level
-fig, ax4 = plt.subplots(figsize=(10, 6))
-ax4.bar(card_names, maxed_level, color='purple')
-# Rotate the card names on the x-axis for readability
-ax4.set_xticklabels(card_names, rotation=90, fontsize=10)
-ax4.set_title('Cards by Maxed Level ', fontsize=16)
-ax4.set_xlabel('Card Name', fontsize=12)
-ax4.set_ylabel('Maxed Level', fontsize=12)
+# Plot 4: Cards by Maxed Level
+axs[1, 1].bar(card_names, maxed_level, color='purple')
+axs[1, 1].set_xticklabels(card_names, rotation=90, fontsize=8)
+axs[1, 1].set_title('Cards by Maxed Level', fontsize=14)
+axs[1, 1].set_xlabel('Card Name', fontsize=10)
+axs[1, 1].set_ylabel('Maxed Level', fontsize=10)
 
-# Display the plot
+# Adjust layout for better appearance
 plt.tight_layout()
+
+# Display the single window with all plots
 plt.show()
